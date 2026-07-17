@@ -1,0 +1,15 @@
+# Start server
+PORT=8080 ./p2p-registry-api.sh
+
+# Register user
+curl -X POST http://localhost:8080/users/register \
+  -H "Content-Type: application/json" \
+  -d '{"public_key":"BASE64_PUBKEY","display_name":"Max"}'
+
+# Heartbeat
+curl -X POST http://localhost:8080/presence/heartbeat \
+  -H "Content-Type: application/json" \
+  -d '{"uid":"some-uid","endpoint":{"type":"webrtc","signal_id":"sig-abc"}}'
+
+# Lookup
+curl "http://localhost:8080/presence/lookup?uid=some-uid"
